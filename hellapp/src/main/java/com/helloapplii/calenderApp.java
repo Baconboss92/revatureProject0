@@ -39,6 +39,7 @@ public class calenderApp {
                     }
                     switch(num1) {
                         case 1:
+                            System.out.print("Chose a day to view. \n");
                             int num2;
                             try {
                                 num2 = scanner.nextInt();
@@ -46,7 +47,35 @@ public class calenderApp {
                             } catch(InputMismatchException e) {
                                 num2 = 0;
                             }
-                            System.out.print(dao.getEvents(c.get(Calendar.YEAR), (c.get(Calendar.MONTH) + 1), num2) + "\n");
+                            int num3 = (c.get(Calendar.MONTH) + 1);
+                            int num4 = c.get(Calendar.YEAR);
+                            System.out.print("Do you want to use a month and date besides the currunt one? 1-yes 0-no \n");
+                            try {
+                                num1 = scanner.nextInt();
+                                scanner.nextLine();
+                            } catch(InputMismatchException e) {
+                                System.out.println("That's not a number, try again\n");
+                                break;
+                            }
+                            switch(num1) {
+                                case 1:
+                                    try {
+                                        num3 = scanner.nextInt();
+                                        scanner.nextLine();
+                                    } catch(InputMismatchException e) {
+                                    }
+                                    try {
+                                        num4 = scanner.nextInt();
+                                        scanner.nextLine();
+                                    } catch(InputMismatchException e) {
+                                    }
+                                case 0:
+                            }
+                            if(ser.isValidDay(num4, num3, num2) == false){
+                                System.out.println("That's not a valid day, try again\n");
+                                break;
+                            }
+                            System.out.print(dao.getEvents(num4, num3, num2) + "\n");
                             break;
                         case 2:
                             System.out.print("Chose a day to modify. \n");
@@ -59,8 +88,8 @@ public class calenderApp {
                                 break;
                             }
                             // Okay here is some year stuff
-                            int num3 = (c.get(Calendar.MONTH) + 1);
-                            int num4 = c.get(Calendar.YEAR);
+                            num3 = (c.get(Calendar.MONTH) + 1);
+                            num4 = c.get(Calendar.YEAR);
                             System.out.print("Do you want to use a month and date besides the currunt one? 1-yes 0-no \n");
                             try {
                                 num1 = scanner.nextInt();
@@ -81,7 +110,6 @@ public class calenderApp {
                                     } catch(InputMismatchException e) {
                                     }
                                 case 0:
-                                    System.out.print("You either pressed 0 or entered something valid, thanks. \n");
                             }
                             if(ser.isValidDay(num4, num3, num2) == false){
                                 System.out.println("That's not a valid day, try again\n");
@@ -112,7 +140,6 @@ public class calenderApp {
                                         System.out.print("Somehow you broke this, try again. \n");
                                     }
                                 case 0:
-                                    System.out.print("You either pressed 0 or entered something valid, thanks. \n");
                             }
                             Day day1 = new Day(num4, num3, num2);
                             event event1 = new event(string1, string2);

@@ -20,17 +20,15 @@ public class calDAO implements calRep {
             String query="CREATE TABLE calender(id SERIAL PRIMARY KEY,year int NOT NULL,month int NOT NULL,day int NOT NULL, CONSTRAINT unique_date UNIQUE(year, month, day))";
             Statement stmt=conn.createStatement();
             stmt.executeUpdate(query);
-            System.out.println("Table has been created successfully, this should not of occured");
         } catch (SQLException e) {
         }
     }
     @Override
     public void createSecondTable(){
         try {
-            String query="CREATE TABLE eventTracker(id SERIAL PRIMARY KEY,eventName varchar(255),eventDesc text)";
+            String query="CREATE TABLE eventTracker(id SERIAL PRIMARY KEY,eventName varchar(255) UNIQUE,eventDesc text)";
             Statement stmt=conn.createStatement();
             stmt.executeUpdate(query);
-            System.out.println("Table has been created successfully, this should not of occured");
         } catch (SQLException e) {
         }
     }
@@ -40,7 +38,6 @@ public class calDAO implements calRep {
             String query="CREATE TABLE dayToEvents (day_id int REFERENCES calender(id),event_id int REFERENCES eventTracker(id),PRIMARY KEY (day_id, event_id))";
             Statement stmt=conn.createStatement();
             stmt.executeUpdate(query);
-            System.out.println("Table has been created successfully, this should not of occured");
         } catch (SQLException e) {
         }
     }
@@ -50,7 +47,6 @@ public class calDAO implements calRep {
             String query=String.format("insert into calender(month,day,event) values('%s','%s','%s');",month,day,event);
             Statement stmt=conn.createStatement();
             stmt.executeUpdate(query);
-            System.out.println("Inserted successfully !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
@@ -90,7 +86,6 @@ public class calDAO implements calRep {
             String query=String.format("insert into dayToEvents(day_id,event_id) values('%s','%s');",day.getID(),eve.getID());
             Statement stmt=conn.createStatement();
             stmt.executeUpdate(query);
-            System.out.println("Inserted successfully !");
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
@@ -109,7 +104,17 @@ public class calDAO implements calRep {
                 eve.setID(tempRS.getInt("id"));
             }
         }catch (SQLException e){
-            System.out.println(e.getMessage());
+            try {
+                String query=String.format("select id from eventTracker where eventName = '%s' and eventDesc = '%s';",eve.getEventName(),eve.getEventDesc());
+                Statement stmt=conn.createStatement();
+                ResultSet tempRS = stmt.executeQuery(query);
+                while(tempRS.next()){
+                    eve.setID(tempRS.getInt("id"));
+                }
+            } catch (SQLException r) {
+                System.out.println(e.getMessage());
+                System.out.println(r.getMessage());
+            }
         }
 
     }
