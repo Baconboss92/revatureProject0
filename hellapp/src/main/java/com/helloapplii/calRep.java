@@ -10,6 +10,7 @@ public interface calRep {
     void insertRow(int month, int day, String event);
     void insertDay(Day day);
     void bindDayToEvent(Day day, event eve);
+    void unbindDayToEvent(Day day, event eve);
     void insertEvent(event eve);
     List<String> getEvents(int year, int month, int day);
 }

@@ -92,6 +92,16 @@ public class calDAO implements calRep {
 
     }
     @Override
+    public void unbindDayToEvent(Day day, event eve){
+        try{
+            String query=String.format("delete from dayToEvents where day_id = '%s' and event_id = '%s';",day.getID(),eve.getID());
+            Statement stmt=conn.createStatement();
+            stmt.executeUpdate(query);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    @Override
     public void insertEvent(event eve){
         try{
             String query=String.format("insert into eventTracker(eventName,eventDesc) values('%s','%s');",eve.getEventName(),eve.getEventDesc());

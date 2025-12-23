@@ -35,6 +35,7 @@ public class calenderApp {
                         num1 = scanner.nextInt();
                         scanner.nextLine();
                     } catch(InputMismatchException e) {
+                        scanner.nextLine();
                         num1 = 0;
                     }
                     switch(num1) {
@@ -45,16 +46,19 @@ public class calenderApp {
                                 num2 = scanner.nextInt();
                                 scanner.nextLine();
                             } catch(InputMismatchException e) {
-                                num2 = 0;
+                                scanner.nextLine();
+                                System.out.println("That's not a number, try again");
+                                break;
                             }
                             int num3 = (c.get(Calendar.MONTH) + 1);
                             int num4 = c.get(Calendar.YEAR);
-                            System.out.print("Do you want to use a month and date besides the currunt one? 1-yes 0-no \n");
+                            System.out.print("Do you want to use a month and year besides the currunt one? 1-yes 0-no \n");
                             try {
                                 num1 = scanner.nextInt();
                                 scanner.nextLine();
                             } catch(InputMismatchException e) {
-                                System.out.println("That's not a number, try again\n");
+                                scanner.nextLine();
+                                System.out.println("That's not a number, try again");
                                 break;
                             }
                             switch(num1) {
@@ -63,16 +67,22 @@ public class calenderApp {
                                         num3 = scanner.nextInt();
                                         scanner.nextLine();
                                     } catch(InputMismatchException e) {
+                                        scanner.nextLine();
+                                        System.out.println("That's not a number, try again");
+                                        break;
                                     }
                                     try {
                                         num4 = scanner.nextInt();
                                         scanner.nextLine();
                                     } catch(InputMismatchException e) {
+                                        scanner.nextLine();
+                                        System.out.println("That's not a number, try again");
+                                        break;
                                     }
                                 case 0:
                             }
                             if(ser.isValidDay(num4, num3, num2) == false){
-                                System.out.println("That's not a valid day, try again\n");
+                                System.out.println("That's not a valid day, try again");
                                 break;
                             }
                             System.out.print(dao.getEvents(num4, num3, num2) + "\n");
@@ -84,18 +94,21 @@ public class calenderApp {
                                 num2 = scanner.nextInt();
                                 scanner.nextLine();
                             } catch(InputMismatchException e) {
-                                System.out.println("That's not a number, try again\n");
+                                scanner.nextLine();
+                                System.out.println("That's not a number, try again");
                                 break;
                             }
                             // Okay here is some year stuff
                             num3 = (c.get(Calendar.MONTH) + 1);
                             num4 = c.get(Calendar.YEAR);
-                            System.out.print("Do you want to use a month and date besides the currunt one? 1-yes 0-no \n");
+                            System.out.print("Do you want to use a month and year besides the current one? 1-yes 0-no \n");
                             try {
                                 num1 = scanner.nextInt();
                                 scanner.nextLine();
                             } catch(InputMismatchException e) {
-                                num1 = 0;
+                                scanner.nextLine();
+                                System.out.println("That's not a number, try again");
+                                break;
                             }
                             switch(num1) {
                                 case 1:
@@ -103,53 +116,89 @@ public class calenderApp {
                                         num3 = scanner.nextInt();
                                         scanner.nextLine();
                                     } catch(InputMismatchException e) {
+                                        scanner.nextLine();
+                                        System.out.println("That's not a number, try again");
+                                        break;
                                     }
                                     try {
                                         num4 = scanner.nextInt();
                                         scanner.nextLine();
                                     } catch(InputMismatchException e) {
+                                        scanner.nextLine();
+                                        System.out.println("That's not a number, try again");
+                                        break;
                                     }
                                 case 0:
                             }
                             if(ser.isValidDay(num4, num3, num2) == false){
-                                System.out.println("That's not a valid day, try again\n");
+                                System.out.println("That's not a valid day, try again");
+                                break;
+                            }
+                            System.out.print("Do you want to add or delete an event from a day? 1-add 0-delete \n");
+                            try {
+                                num1 = scanner.nextInt();
+                                scanner.nextLine();
+                            } catch(InputMismatchException e) {
+                                scanner.nextLine();
+                                System.out.println("That's not a number, try again");
                                 break;
                             }
                             String string1;
-                            System.out.print("Write out the name of the event you want to add. \n");
+                            if(num1 == 1){
+                                System.out.print("Write out the name of the event you want to add. \n");
+                            }
+                            else{
+                                System.out.print("Write out the name of the event you want to delete. \n");
+                            }
                             try {
                                 string1 = scanner.nextLine();
                             } catch(InputMismatchException e) {
+                                scanner.nextLine();
                                 System.out.print("Somehow you broke this, try again. \n");
                                 break;
                             }
                             // Trying out stuff for a descripation
                             String string2 = null;
-                            System.out.print("Do you want to add a event descripation? 1-yes 0-no \n");
-                            try {
-                                num1 = scanner.nextInt();
-                                scanner.nextLine();
-                            } catch(InputMismatchException e) {
-                                num1 = 0;
-                            }
-                            switch(num1) {
-                                case 1:
-                                    try {
-                                        string2 = scanner.nextLine();
-                                    } catch(InputMismatchException e) {
-                                        System.out.print("Somehow you broke this, try again. \n");
-                                    }
-                                case 0:
+                            if(num1 == 1){
+                                System.out.print("Do you want to add a event descripation? 1-yes 0-no \n");
+                                try {
+                                    num1 = scanner.nextInt();
+                                    scanner.nextLine();
+                                } catch(InputMismatchException e) {
+                                    scanner.nextLine();
+                                    System.out.println("That's not a number, try again");
+                                    break;
+                                }
+                                switch(num1) {
+                                    case 1:
+                                        try {
+                                            string2 = scanner.nextLine();
+                                        } catch(InputMismatchException e) {
+                                            scanner.nextLine();
+                                            System.out.print("Somehow you broke this, try again. \n");
+                                            break;
+                                        }
+                                    case 0:
+                                        num1 = 1;
+                                }
                             }
                             Day day1 = new Day(num4, num3, num2);
                             event event1 = new event(string1, string2);
                             dao.insertDay(day1);
                             dao.insertEvent(event1);
-                            dao.bindDayToEvent(day1, event1);
+                            if(num1 == 1){
+                                dao.bindDayToEvent(day1, event1);
+                            }
+                            else{
+                                dao.unbindDayToEvent(day1, event1);
+                            }
                             break;
                         case 3:
                             System.out.print("Have a nice day.");
                             on = false;
+                            break;
+                        case 0:
+                            System.out.print("That is not a valid order, try again!\n");
                             break;
                         default:
                             System.out.print("That is not a valid order, try again!\n");
